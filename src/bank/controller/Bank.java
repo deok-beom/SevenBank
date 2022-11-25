@@ -25,8 +25,6 @@ public class Bank {
     public void deleteAccount(Customer customer) {
         for(Account account : bankAccounts) {
             if(customer.getName().equals(account.getOwnerName())) {
-        for (Account account : bankAccounts) {
-            if (customer.getName().equals(account.getOwnerName())) {
                 bankAccounts.remove(customer);
             }
         }

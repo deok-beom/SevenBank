@@ -1,10 +1,8 @@
 package bank.controller;
 
-<<<<<<< HEAD
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-=======
->>>>>>> upstream/main
 
 public class Customer {
     private String name;
@@ -13,7 +11,6 @@ public class Customer {
 
     public Customer(String name, String customerId) {
         this.name = name;
-        this.customerAccounts = new ArrayList<>();
         this.customerId = customerId;
     }
 
@@ -28,14 +25,4 @@ public class Customer {
     public String getCustomerId() {
         return customerId;
     }
-
-<<<<<<< HEAD
-
-    public Customer(String name, String customerId) {
-        this.name = name;
-        this.customerId = customerId;
-    }
-
-=======
->>>>>>> upstream/main
 }
