@@ -36,7 +36,7 @@ public class BankingView {
                         break;
 
                     case "3":
-                        System.out.println(" 잔고 : " + "잔고금액변수" + "원");
+                        System.out.println(" 잔고 : " + "  잔고금액변수" + "원");
                         break;
                 }
             }
