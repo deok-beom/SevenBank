@@ -1,6 +1,7 @@
 package bank.controller;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,18 +43,41 @@ public class Account {
         histories.add(history);
     }
 
-    public void printHistories() {
+    public String printAllHistoriesOrNull() {
         StringBuilder historyBuilder = new StringBuilder();
+        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
 
         for (int i = 0; i < histories.size(); i++) {
             History singleHistory = histories.get(i);
-            historyBuilder.append(String.format("%d. %s, %s, %s원 ", i + 1, singleHistory.getTraderName(),
-                    singleHistory.getTypeByString(), singleHistory.getAmount()));
-            historyBuilder.append(String.format("[%s %s]%s", singleHistory.getTransactionDate(),
-                    singleHistory.getTransactionTime(), System.lineSeparator()));
+
+            historyBuilder.append(String.format("%d. %s, %s, ", i + 1, singleHistory.getTraderName(),
+                    singleHistory.getTypeByString()));
+            // 만약 거래 금액이 0보다 크다면!
+            if (singleHistory.getAmount().compareTo(BigDecimal.ZERO) > 0) {
+                historyBuilder.append(String.format("+%s원", decimalFormatter.format(singleHistory.getAmount())));
+            } else {
+                historyBuilder.append(String.format("%s원", decimalFormatter.format(singleHistory.getAmount())));
+            }
+
+            historyBuilder.append(String.format("[%s]%s", singleHistory.getTransactionDate(), System.lineSeparator()));
         }
 
-        System.out.println(historyBuilder.toString());
+        return historyBuilder.toString();
+    }
+
+    public String printHistory(int index) {
+        StringBuilder historyBuilder = new StringBuilder();
+        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
+
+        History targetHistory = histories.get(index - 1);
+        historyBuilder.append(String.format("%s%s", targetHistory.getTransactionDate(), System.lineSeparator()));
+        historyBuilder.append(String.format("거래금액: %s%s", decimalFormatter.format(targetHistory.getAmount()),
+                System.lineSeparator()));
+        historyBuilder.append(String.format("거래후 잔액: %s%s", decimalFormatter.format(targetHistory.getBalance()),
+                System.lineSeparator()));
+        historyBuilder.append(String.format("거래유형: %s", targetHistory.getTypeByString()));
+
+        return historyBuilder.toString();
     }
 
     public void editAccount(String newOwnerName, String newAccountNumber, String newBankName) {

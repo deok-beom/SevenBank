@@ -13,20 +13,16 @@ public class History {
     private String traderName;
 
     public History(OffsetDateTime transactionDate, String accountNumber, ETradeType type, BigDecimal amount, BigDecimal balance, String traderName) {
-            this.transactionDate = transactionDate;
-            this.accountNumber = accountNumber;
-            this.type = type;
-            this.amount = amount;
-            this.balance = balance;
-            this.traderName = traderName;
+        this.transactionDate = transactionDate;
+        this.accountNumber = accountNumber;
+        this.type = type;
+        this.amount = amount;
+        this.balance = balance;
+        this.traderName = traderName;
     }
 
     public String getTransactionDate() {
-        return this.transactionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
-
-    public String getTransactionTime() {
-        return this.transactionDate.format(DateTimeFormatter.ofPattern("hh:mm"));
+        return this.transactionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
     }
 
     public String getAccountNumber() {
@@ -37,6 +33,7 @@ public class History {
         return type;
     }
 
+    // 거래 유형을 String으로 반환해주는 메소드
     public String getTypeByString() {
         String type = "오류";
         switch (this.type) {
