@@ -94,6 +94,9 @@ public class Account {
             return amount;
         }
     }
+
+    public void ReadDateTimeInHistory(History history) { //히스토리(거래내역)에서 해당일자,시간을 조회 및 해당금액 출력
+    }
 }
 
 

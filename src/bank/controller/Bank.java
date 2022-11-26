@@ -1,5 +1,6 @@
 package bank.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -24,8 +25,8 @@ public class Bank {
     }
 
     public void deleteAccount(Customer customer) {
-        for (Account account : bankAccounts) {
-            if (customer.getName().equals(account.getOwnerName())) {
+        for(Account account : bankAccounts) {
+            if(customer.getName().equals(account.getOwnerName())) {
                 bankAccounts.remove(customer);
             }
         }
@@ -49,4 +50,5 @@ public class Bank {
         return true;
     }
 }
+
 
