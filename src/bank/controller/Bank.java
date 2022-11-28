@@ -11,12 +11,15 @@ public class Bank {
     private String bankCode;
     private List<Account> bankAccounts;
     private List<Customer> customers;
+    private BigDecimal interestRate;
 
-    public Bank(String bankName, String bankCode) {
+
+    public Bank(String bankName, BigDecimal interestRate) {
         this.bankName = bankName;
         this.bankCode = bankCode;
         this.bankAccounts = new ArrayList<>();
         this.customers = new ArrayList<>();
+        this.interestRate = interestRate;
     }
 
     public Customer getCustomerOrNull(String customerID) {
@@ -85,7 +88,7 @@ public class Bank {
             }
         }
 
-        Account newAccount = new Account(ownerName, bankNumber, this.bankName);
+        Account newAccount = new Account(ownerName, bankNumber, this.bankName, this.interestRate);
         bankAccounts.add(newAccount);
         return newAccount;
     }

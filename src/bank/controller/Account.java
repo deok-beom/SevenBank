@@ -8,18 +8,22 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Account {
+    DecimalFormat decimalFormatter = new DecimalFormat("0.##");
     private String ownerName;
     private String accountNumber;
     private BigDecimal balance;
     private String bankName;
     private List<History> histories;
 
-    public Account(String ownerName, String accountNumber, String bankName) {
+    private BigDecimal interestRate;
+
+    public Account(String ownerName, String accountNumber, String bankName, BigDecimal interestRate) {
         this.ownerName = ownerName;
         this.accountNumber = accountNumber;
         this.balance = new BigDecimal(0);
         this.bankName = bankName;
         this.histories = new ArrayList<>();
+        this.interestRate = interestRate;
     }
 
     public String getOwnerName() {
@@ -36,13 +40,18 @@ public class Account {
         hypenAttacher.append("-");
         hypenAttacher.append(accountNumber.substring(3, 6));
         hypenAttacher.append("-");
-        hypenAttacher.append(accountNumber.substring(6, accountNumber.length()));
+        hypenAttacher.append(accountNumber.substring(6));
 
         return hypenAttacher.toString();
     }
 
     public BigDecimal getBalance() {
         return this.balance;
+//        return this.balance.multiply(this.interestRate.add());
+    }
+
+    public BigDecimal getInterestRate() {
+        return this.interestRate;
     }
 
     public String getBankName() {
@@ -60,7 +69,7 @@ public class Account {
 
     public String printAllHistoriesOrNull() {
         StringBuilder historyBuilder = new StringBuilder();
-        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
+//        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
 
         for (int i = 0; i < histories.size(); i++) {
             History singleHistory = histories.get(i);
