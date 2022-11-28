@@ -11,7 +11,7 @@ public class BankingView {
     Scanner inputSc = new Scanner(System.in);
 
     // 은행 업무를 선택하게 되는 뷰
-    public void showUiBanking(List<Account> accounts) {
+    public void showUIBanking(List<Account> accounts) {
         System.out.println("--------------------------------");
         System.out.println("1. 입금 ｜2. 출금 ｜3. 잔여금");
         System.out.print(" > "); //어떤 작업을 할지 번호 기입란 표기 예) > 1

@@ -21,7 +21,7 @@ public class Bank {
 
     public Customer getCustomerOrNull(String customerID) {
         for (Customer customer : customers) {
-            if (customer.getCustomerId().equals(customerID)) {
+            if (customer.getCustomerID().equals(customerID)) {
                 return customer;
             }
         }
@@ -39,7 +39,7 @@ public class Bank {
 
     public boolean checkDuplicateID(String customerID) {
         for (Customer customer : customers) {
-            if (customer.getCustomerId().equals(customerID)) {
+            if (customer.getCustomerID().equals(customerID)) {
                 return false;
             }
         }
@@ -73,7 +73,7 @@ public class Bank {
         }
     }
 
-    public void findEveryAccountFromCustomerId(Customer customer) { //모든 계좌 목록 조회
+    public void findEveryAccountFromCustomerID(Customer customer) { //모든 계좌 목록 조회
         List<Account> temp = customer.getAccounts();
         for (Account account : temp) {
             System.out.println(account);

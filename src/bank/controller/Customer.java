@@ -5,20 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Customer {
-    private String customerId;
+    private String customerID;
     private String password;
     private String name;
     private List<Account> customerAccounts;
 
-    public Customer(String customerId, String password, String name) {
-        this.customerId = customerId;
+    public Customer(String customerID, String password, String name) {
+        this.customerID = customerID;
         this.password = password;
         this.name = name;
         this.customerAccounts = new ArrayList<>();
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getCustomerID() {
+        return customerID;
     }
 
     public String getPassword() {
@@ -33,8 +33,8 @@ public class Customer {
         return customerAccounts;
     }
 
-    public Customer(String name, String customerId) {
+    public Customer(String name, String customerID) {
         this.name = name;
-        this.customerId = customerId;
+        this.customerID = customerID;
     }
 }
