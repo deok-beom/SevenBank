@@ -28,10 +28,10 @@ public class CustomerApp {
             return true;
         }
 
-        return false;
+        return false; //비밀번호 맞으면 로그인성공 아니면 로그인 실패
     }
 
-    public static boolean checkDuplicateID(String customerID) {
+    public static boolean checkDuplicateID(String customerID) { //아이디 중복체크, 중복아이디 있으면 실패 없으면 성공
         if (customers.containsKey(customerID)) {
             return false;
         } else {

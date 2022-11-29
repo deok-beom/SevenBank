@@ -37,10 +37,8 @@ public class BankingView {
         String inputMove = moveScanner.next();
 
 
-        // 모두 숫자로 이루어져있는지 검사
-        // 범위 안에 있는지 검사
-        // 은행 업무 선택
-        for (int i = 0; i < inputMove.length(); i++) {
+
+        for (int i = 0; i < inputMove.length(); i++) { //입력한 문자가 모두 숫자로 이루어졌는지 검사
             char moveChar = inputMove.charAt(i);
             if (moveChar < 48 || moveChar > 57) {
                 ViewMethod.jump();
@@ -51,14 +49,14 @@ public class BankingView {
         }
 
         int moveInt = Integer.parseInt(inputMove);
-        if (moveInt < 0 || moveInt > accounts.size() + 1) {
+        if (moveInt < 0 || moveInt > accounts.size() + 1) { // 범위 안에 있는지 검사
             ViewMethod.jump();
             ViewMethod.printWrongTypingMessage();
             showAccountListUI(customer);
             return;
         }
 
-        if (moveInt == 0) {
+        if (moveInt == 0) {  // 은행 업무 선택
             ViewMethod.jump();
             showMainAccountUI(customer);
         } else if (moveInt == accounts.size() + 1) {
