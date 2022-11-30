@@ -11,8 +11,4 @@ public class CustomerDB {
     public static void addCustomer(Customer customer) {
         customers.add(customer);
     }
-
-    public static void deleteBank(Customer customer) {
-        customers.remove(customer);
-    }
 }

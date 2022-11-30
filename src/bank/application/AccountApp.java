@@ -34,8 +34,9 @@ public class AccountApp {
         if (targetAccount.getBalance().compareTo(BigDecimal.ZERO) != 0) {
             return false; //잔고가 0원이 아니면 삭제불가
         } else {
-            customer.deleteCustomerAccount(targetAccount); //잔고가 0원이면 삭제
-            accounts.remove(targetAccount);
+            customer.deleteCustomerAccount(targetAccount);
+            accounts.remove(targetAccount.getAccountNumber());
+
             return true;
         }
     }

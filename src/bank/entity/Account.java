@@ -29,6 +29,10 @@ public class Account {
         return this.ownerName;
     }
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
     public String getAccountNumberWithHypen() {
         StringBuilder hypenAttacher = new StringBuilder();
         hypenAttacher.append(accountNumber.substring(0, 3));
@@ -45,7 +49,7 @@ public class Account {
     }
 
     public String getBalanceApplyInterestRate() {
-        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
+        DecimalFormat decimalFormatter = new DecimalFormat("###,###.##");
         BigDecimal result = this.interestRate.add(BigDecimal.valueOf(1));
         return decimalFormatter.format(this.balance.multiply(result));
     }
@@ -69,7 +73,7 @@ public class Account {
 
     public String printAllHistoriesOrNull() {
         StringBuilder historyBuilder = new StringBuilder();
-        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
+        DecimalFormat decimalFormatter = new DecimalFormat("###,###.##");
 
         if (histories.size() == 0) {
             return null;
@@ -78,9 +82,8 @@ public class Account {
         for (int i = 0; i < histories.size(); i++) {
             History singleHistory = histories.get(i);
 
-            historyBuilder.append(String.format("%d. %s, %s, ", i + 1, singleHistory.getTraderName(),
+            historyBuilder.append(String.format("%d. %s, %s, ", i + 1, singleHistory.getReceiverNameName(),
                     singleHistory.getTypeByString()));
-            // 만약 거래 금액이 0보다 크다면!
             if (singleHistory.getType() == ETradeType.DEPOSIT) {
                 historyBuilder.append(String.format("+%s원", decimalFormatter.format(singleHistory.getAmount())));
             } else {
@@ -95,32 +98,48 @@ public class Account {
 
     public String printHistory(int index) {
         StringBuilder historyBuilder = new StringBuilder();
-        DecimalFormat decimalFormatter = new DecimalFormat("0.##");
+        DecimalFormat decimalFormatter = new DecimalFormat("###,###.##");
 
         History targetHistory = histories.get(index);
         historyBuilder.append(String.format("%s%s", targetHistory.getTransactionDate(), System.lineSeparator()));
 
-        historyBuilder.append(String.format("거래금액: %s%s", decimalFormatter.format(targetHistory.getAmount()),
-                System.lineSeparator()));
-        if (targetHistory.getType() == ETradeType.DEPOSIT) {
-            historyBuilder.append(String.format("거래후 잔액: +%s%s", decimalFormatter.format(targetHistory.getAfterBalance()),
-                    System.lineSeparator()));
-        } else {
-            historyBuilder.append(String.format("거래후 잔액: -%s%s", decimalFormatter.format(targetHistory.getAfterBalance()),
-                    System.lineSeparator()));
+        switch (targetHistory.getType()) {
+            case DEPOSIT:
+                historyBuilder.append(String.format("입금자: %s%s", targetHistory.getReceiverNameName(),
+                        System.lineSeparator()));
+                historyBuilder.append(String.format("거래금액: +%s%s", decimalFormatter.format(targetHistory.getAmount()),
+                        System.lineSeparator()));
+                break;
+            case WITHDRAW:
+                historyBuilder.append(String.format("출금자: %s%s", targetHistory.getReceiverNameName(),
+                        System.lineSeparator()));
+                historyBuilder.append(String.format("거래금액: -%s%s", decimalFormatter.format(targetHistory.getAmount()),
+                        System.lineSeparator()));
+                break;
+            case TRANSFER:
+                historyBuilder.append(String.format("받는 사람: %s%s", targetHistory.getReceiverNameName(),
+                        System.lineSeparator()));
+                historyBuilder.append(String.format("거래금액: -%s%s", decimalFormatter.format(targetHistory.getAmount()),
+                        System.lineSeparator()));
+                break;
+            default:
+                break;
         }
-        historyBuilder.append(String.format("거래유형: %s", targetHistory.getTypeByString()));
 
         if (targetHistory.getFee().compareTo(BigDecimal.ZERO) != 0) {
-            historyBuilder.append(String.format("수수료: %s%s", System.lineSeparator(), targetHistory.getFee()));
+            historyBuilder.append(String.format("수수료: %s%s", targetHistory.getFee(), System.lineSeparator()));
         }
+
+        historyBuilder.append(String.format("거래후 잔액: %s원%s", decimalFormatter.format(targetHistory.getAfterBalance()),
+                System.lineSeparator()));
+        historyBuilder.append(String.format("거래유형: %s", targetHistory.getTypeByString()));
 
         return historyBuilder.toString();
     }
 
     public BigDecimal withdraw(BigDecimal amount) {
         if (this.balance.compareTo(amount) < 0) {
-             return BigDecimal.ZERO;
+            return BigDecimal.ZERO;
         } else {
             this.balance = this.balance.subtract(amount);
             addHistory(ETradeType.WITHDRAW, amount, BigDecimal.ZERO, this.balance, ownerName);
@@ -134,16 +153,16 @@ public class Account {
         return amount;
     }
 
-    public boolean transfer(Account yourAccount, BigDecimal amount, BigDecimal fee){
+    public boolean transfer(Account yourAccount, BigDecimal amount, BigDecimal fee) {
         BigDecimal finalAmount = amount.add(fee);
 
         if (this.balance.compareTo(finalAmount) < 0) {
             return false;
         } else {
             this.balance = this.balance.subtract(finalAmount);
-            yourAccount.balance = yourAccount.balance.add(finalAmount);
-            addHistory(ETradeType.TRANSFER, amount, fee, this.balance, ownerName);
-            yourAccount.addHistory(ETradeType.DEPOSIT, amount, fee, yourAccount.balance, ownerName);
+            yourAccount.balance = yourAccount.balance.add(amount);
+            addHistory(ETradeType.TRANSFER, amount, fee, this.balance, yourAccount.getOwnerName());
+            yourAccount.addHistory(ETradeType.DEPOSIT, amount, BigDecimal.ZERO, yourAccount.balance, ownerName);
             return true;
         }
     }

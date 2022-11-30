@@ -12,7 +12,7 @@ import java.util.Scanner;
 import static bank.view.AccountView.showMainAccountUI;
 
 public class BankingView {
-
+    public static DecimalFormat moneyFormatter = new DecimalFormat("###,###");
     // 소유한 계좌 목록을 보여주는 뷰
     public static void showAccountListUI(Customer customer) {
         Scanner moveScanner = new Scanner(System.in);
@@ -118,8 +118,8 @@ public class BankingView {
                 break;
             case 4:
                 ViewMethod.jump();
-                System.out.print(String.format("%s💰잔고: %s원", System.lineSeparator(), currentAccount.getBalance()));
-                System.out.println(String.format("%s💰연이율이 적용된 예상 잔고: %s원", System.lineSeparator(),
+                System.out.print(String.format("%s💰잔고: %s원", System.lineSeparator(), moneyFormatter.format(currentAccount.getBalance())));
+                System.out.println(String.format("%s💰연 이율이 적용된 예상 잔고: %s원", System.lineSeparator(),
                         currentAccount.getBalanceApplyInterestRate()));
                 showBankingUI(customer, index);
                 break;
@@ -150,7 +150,7 @@ public class BankingView {
                 account.getAccountNumberWithHypen()));
         System.out.println("========================================");
         System.out.println("<되돌아 가려면 0번을 입력하세요.>");
-        System.out.print(String.format(" 입금할 금액(이율이 %s%% 입니다.) : ",
+        System.out.print(String.format(" 입금할 금액(연 이율 %s%% 입니다.) : ",
                 decimalFormatter.format(account.getInterestRate().multiply(BigDecimal.valueOf(100)))));
         String inputAmount = amountScanner.next();
 
@@ -174,8 +174,9 @@ public class BankingView {
 
         BigDecimal afterAmount = account.deposit(amount);
         ViewMethod.jump();
-        System.out.println(String.format("💸입금 완료: +%s원", afterAmount));
-        System.out.println(String.format("💰잔고: %s원", account.getBalance()));
+
+        System.out.println(String.format("💸입금 완료: +%s원", moneyFormatter.format(afterAmount)));
+        System.out.println(String.format("💰잔고: %s원", moneyFormatter.format(account.getBalance())));
         showBankingUI(customer, index);
     }
 
@@ -184,7 +185,7 @@ public class BankingView {
         Account account = customer.getAccount(index - 1);
 
         Scanner amountScanner = new Scanner(System.in);
-        System.out.println(String.format("💰현재 잔고: %s원", account.getBalance()));
+        System.out.println(String.format("💰현재 잔고: %s원", moneyFormatter.format(account.getBalance())));
         System.out.println(String.format("👛현재 계좌 : [%s] %s", account.getBankName(),
                 account.getAccountNumberWithHypen()));
         System.out.println("========================================");
@@ -218,8 +219,8 @@ public class BankingView {
         }
 
         ViewMethod.jump();
-        System.out.println(String.format("💸출금 완료: -%s원", afterAmount));
-        System.out.println(String.format("💰잔고: %s원", account.getBalance()));
+        System.out.println(String.format("💸출금 완료: -%s원", moneyFormatter.format(afterAmount)));
+        System.out.println(String.format("💰잔고: %s원", moneyFormatter.format(account.getBalance())));
         showBankingUI(customer, index);
     }
 
@@ -228,7 +229,7 @@ public class BankingView {
         Account account = customer.getAccount(index - 1);
 
         Scanner amountScanner = new Scanner(System.in);
-        System.out.println(String.format("💰현재 잔고: %s원", account.getBalance()));
+        System.out.println(String.format("💰현재 잔고: %s원", moneyFormatter.format(account.getBalance())));
         System.out.println(String.format("👛현재 계좌 : [%s] %s", account.getBankName(),
                 account.getAccountNumberWithHypen()));
         System.out.println("========================================");
@@ -278,7 +279,7 @@ public class BankingView {
         if (account.transfer(yourAccount, amount, fee)) {
             ViewMethod.jump();
             System.out.println(String.format("💸%s 님께 송금완료!", yourAccount.getOwnerName()));
-            System.out.println(String.format("💰잔고: %s원", account.getBalance()));
+            System.out.println(String.format("💰잔고: %s원", moneyFormatter.format(account.getBalance())));
             showBankingUI(customer, index);
         } else {
             ViewMethod.jump();

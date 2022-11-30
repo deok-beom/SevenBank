@@ -3,6 +3,7 @@ package bank.view;
 import bank.application.CustomerApp;
 import bank.entity.Customer;
 
+import java.io.Console;
 import java.util.Scanner;
 
 public class LoginAndRegisterView {
@@ -106,7 +107,6 @@ public class LoginAndRegisterView {
         if (CustomerApp.checkDuplicateID(newCustomerID)) {
             System.out.print("PASSWORD : ");
             String newCustomerPassword = inputSc.next();
-
             if(newCustomerPassword.equals("0")) {
                 ViewMethod.jump();
                 showBeginningUI();
@@ -122,7 +122,7 @@ public class LoginAndRegisterView {
                 return;
             }
 
-            CustomerApp.registerCustomer(newCustomerID, newCustomerPassword, customerName);
+            CustomerApp.registerCustomer(newCustomerID, String.valueOf(newCustomerPassword), customerName);
         } else {
             ViewMethod.jump();
             System.out.println("중복된 ID 입니다🥲");

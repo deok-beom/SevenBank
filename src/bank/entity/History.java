@@ -11,16 +11,16 @@ public class History {
     private BigDecimal amount;
     private BigDecimal fee;
     private BigDecimal afterBalance;
-    private String traderName;
+    private String receiverName;
 
-    public History(OffsetDateTime transactionDate, String accountNumber, ETradeType type, BigDecimal amount, BigDecimal fee, BigDecimal afterBalance, String traderName) {
+    public History(OffsetDateTime transactionDate, String accountNumber, ETradeType type, BigDecimal amount, BigDecimal fee, BigDecimal afterBalance, String receiverName) {
         this.transactionDate = transactionDate;
         this.accountNumber = accountNumber;
         this.type = type;
         this.amount = amount;
         this.fee = fee;
         this.afterBalance = afterBalance;
-        this.traderName = traderName;
+        this.receiverName = receiverName;
     }
 
     public String getTransactionDate() {
@@ -66,7 +66,7 @@ public class History {
         return afterBalance;
     }
 
-    public String getTraderName() {
-        return traderName;
+    public String getReceiverNameName() {
+        return receiverName;
     }
 }

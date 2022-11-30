@@ -79,7 +79,7 @@ public class AccountView {
             showMainAccountUI(customer);
         }
 
-        System.out.print("계좌 생성중");
+        System.out.print("계좌 생성중.");
         for (int i = 0; i < 3; i++) {
             try {
                 Thread.sleep(1000);

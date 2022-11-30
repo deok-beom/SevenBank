@@ -7,6 +7,7 @@ import bank.application.CustomerApp;
 import bank.entity.Account;
 import bank.view.LoginAndRegisterView;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class Main {
     public static void main(String[] args) {
