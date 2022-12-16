@@ -11,6 +11,8 @@ import java.text.DecimalFormat;
 
 public class Main {
     public static void main(String[] args) {
+
+
         BankApp.registerBank("한국은행", BigDecimal.valueOf(0.01), "101");
         BankApp.registerBank("KB국민은행", BigDecimal.valueOf(0.02), "018");
         BankApp.registerBank("하나은행", BigDecimal.valueOf(0.01), "301");
