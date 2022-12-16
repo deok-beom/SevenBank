@@ -144,7 +144,7 @@ public class AccountView {
 
         if (AccountApp.unregisterAccount(customer.getCustomerId(), selectInt - 1)) {
             ViewMethod.jump();
-            System.out.print("계좌 삭제중");
+            System.out.print("계좌 삭제중.");
             for (int i = 0; i < 3; i++) {
                 try {
                     Thread.sleep(1000);
